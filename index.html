@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✅ Lista de Tareas</title>
+  
+  <!-- Vínculamos la hoja de estilos -->
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- Vínculamos la hoja de Javascript -->
+  <script src="./script.js" defer></script>
+
+  <!-- Vínculamos la Fuente de Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+
+  <!-- Vínculamos los Iconos de Boostrap -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <!-- Víncular un Favicon -->
+  <link rel="icon" href="./assets/favicon.png" type="image/jpeg">
+
+</head>
+<body>
+
+  <div class="contenedor">
+    <h1 class="titulo">✅ Lista de Tareas</h1>
+    <p class="mensaje">Escribe tu próxima tarea! 🤗</p>
+    <input 
+      type="text"
+      class="tarea-entrada" 
+      placeholder="Estudiar para la clase de..." />
+    
+    <div class="contenedor-botones">
+      <button class="boton boton-agregar">Crear Tarea</button>
+      <button class="boton boton-ocultar">Ocultar Completadas</button>
+      <button class="boton boton-eliminar">Eliminar Completadas</button>
+    </div>
+
+    <div class="contenedor-conteo">
+      <p>Tareas totales: <span class="tareas-totales">0</span></p>
+      <p>Tareas terminadas: <span class="tareas-terminadas">0</span></p>
+    </div>
+
+    <div class="contenedor-tareas">
+      
+      <!-- Estructura Tarea 1 -->
+
+      <div class="tarea">
+        <p class="tarea-texto">Estudiar para el examen de Luis Limón! 😰</p>
+        <div class="tarea-iconos">
+          <i class="bi bi-check-circle"></i>
+          <i class="bi bi-trash2"></i>
+        </div>
+      </div>
+
+      <!-- Estructura Tarea 2 Completada -->
+
+      <div class="tarea tarea-completada">
+        <p class="tarea-texto">Grabar secuencia de escena del Cortometraje! 🎥</p>
+        <div class="tarea-iconos">
+          <i class="bi bi-dash-circle"></i>
+          <i class="bi bi-trash2"></i>
+        </div>
+      </div>
+  
+    </div>
+
+  </div>
+</body>
+
+</html>
