@@ -28,14 +28,15 @@
 
   <div class="contenedor">
     <h1 class="titulo">✅ Lista de Tareas</h1>
-    <p class="mensaje">Escribe tu próxima tarea! 🤗</p>
+    <p class="mensaje" id="mensaje">Escribe tu próxima tarea! 🤗</p>
     <input 
       type="text"
-      class="tarea-entrada" 
+      class="tarea-entrada"
+      id="tareaEntrada" 
       placeholder="Estudiar para la clase de..." />
     
     <div class="contenedor-botones">
-      <button class="boton boton-agregar">Crear Tarea</button>
+      <button class="boton boton-agregar" id="botonAgregar">Crear Tarea</button>
       <button class="boton boton-ocultar">Ocultar Completadas</button>
       <button class="boton boton-eliminar">Eliminar Completadas</button>
     </div>
@@ -45,10 +46,10 @@
       <p>Tareas terminadas: <span class="tareas-terminadas">0</span></p>
     </div>
 
-    <div class="contenedor-tareas">
+    <div class="contenedor-tareas" id="contenedorTareas">
       
       <!-- Estructura Tarea 1 -->
-
+<!-- 
       <div class="tarea">
         <p class="tarea-texto">Estudiar para el examen de Luis Limón! 😰</p>
         <div class="tarea-iconos">
@@ -56,9 +57,9 @@
           <i class="bi bi-trash2"></i>
         </div>
       </div>
-
+ -->
       <!-- Estructura Tarea 2 Completada -->
-
+<!-- 
       <div class="tarea tarea-completada">
         <p class="tarea-texto">Grabar secuencia de escena del Cortometraje! 🎥</p>
         <div class="tarea-iconos">
@@ -66,7 +67,7 @@
           <i class="bi bi-trash2"></i>
         </div>
       </div>
-  
+   -->
     </div>
 
   </div>
