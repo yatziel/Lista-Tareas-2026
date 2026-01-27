@@ -29,13 +29,24 @@ function crearElementoTarea() {
   /* Agregamos el texto del usuario */
   tareaTexto.innerText = tareaEntrada.value;
 
+  /* Escuchadores de los iconos */
+  
+  // Ìcono Completada
+  iconoCompletada.addEventListener("click", (e) => {
+    const tareaElemento = e.target.parentNode.parentNode;
+    tareaElemento.classList.toggle('tarea-completada')
+    console.log(tareaElemento)
+  })
+
+  // Ìcono Borrar
+  iconoEliminar.addEventListener("click", (e) => {
+    const tareaElemento = e.target.parentNode.parentNode;
+    tareaElemento.remove();
+  })
+
   /* Retornamos la estructura */
   return tareaContendor;
 }
-
-/* Escuchadores */
-
-botonAgregar.addEventListener("click", agregarTarea);
 
 /* Función Agregar Tarea */
 
@@ -58,3 +69,29 @@ function agregarTarea() {
     mensaje.textContent = "Por favor escribe una tarea antes de agregar. 😅";
   }
 }
+
+/* Escuchadores */
+
+botonAgregar.addEventListener("click", agregarTarea);
+
+
+/* Hacemos que el al presionar la tecla Enter en el input se cree la entrada */
+
+tareaEntrada.addEventListener("keydown", (e) => {
+  if(e.key == "Enter") {
+    agregarTarea();
+  }
+})
+
+/* Mostrar el mensaje al escribir */
+
+tareaEntrada.addEventListener("input", () => {
+
+  if(tareaEntrada.value.trim() === ""){
+    mensaje.textContent = "Escribe tu próxima tarea! 🤗"
+  }else{
+     mensaje.textContent = "Esto se va poner bueno... 😉"
+  }
+  
+})
+
