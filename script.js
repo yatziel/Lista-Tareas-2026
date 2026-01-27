@@ -34,8 +34,16 @@ function crearElementoTarea() {
   // Ìcono Completada
   iconoCompletada.addEventListener("click", (e) => {
     const tareaElemento = e.target.parentNode.parentNode;
-    tareaElemento.classList.toggle('tarea-completada')
-    console.log(tareaElemento)
+    const esCompletada = tareaElemento.classList.contains('tarea-completada');
+    tareaElemento.classList.toggle('tarea-completada');
+
+    if(esCompletada) {
+      e.target.classList.remove('bi-dash-circle');
+      e.target.classList.add('bi-check-circle');
+    }else {
+      e.target.classList.remove('bi-check-circle');
+      e.target.classList.add('bi-dash-circle');
+    }
   })
 
   // Ìcono Borrar
