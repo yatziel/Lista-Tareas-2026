@@ -1,9 +1,14 @@
 /* Referencias al documento del DOM */
 
-const tareaEntrada = document.getElementById("tareaEntrada");
-const botonAgregar = document.getElementById("botonAgregar");
-const contenedorTareas = document.getElementById("contenedorTareas");
-const mensaje = document.getElementById("mensaje");
+const tareaEntrada        = document.getElementById("tareaEntrada");
+const botonAgregar        = document.getElementById("botonAgregar");
+const contenedorTareas    = document.getElementById("contenedorTareas");
+const mensaje             = document.getElementById("mensaje");
+const contadorTotales     = document.getElementById("contadorTotales");
+const contadorTerminadas  = document.getElementById("contadorTerminadas");
+const botonOcultar        = document.getElementById("botonOcultar");
+const botonEliminar       = document.getElementById("botonEliminar");
+
 
 /* Función Crear Tarea (Nodo Tarea) */
 
@@ -40,16 +45,32 @@ function crearElementoTarea() {
     if(esCompletada) {
       e.target.classList.remove('bi-dash-circle');
       e.target.classList.add('bi-check-circle');
+      // 👇 Si estaban ocultas, mostramos esta tarea que ya no está completada
+      if (tareasOcultas) {
+        tareaElemento.style.display = "flex";
+      }
     }else {
       e.target.classList.remove('bi-check-circle');
       e.target.classList.add('bi-dash-circle');
+      // 👇 Si estaban ocultas, ocultamos esta tarea recién completada
+      if (tareasOcultas) {
+        tareaElemento.style.display = "none";
+      }
     }
+    /* Actualizamos los contadores */
+    actualizarContadores();
+    /* Actualizamos los botones */
+    actualizarEstadoBotones();
   })
 
   // Ìcono Borrar
   iconoEliminar.addEventListener("click", (e) => {
     const tareaElemento = e.target.parentNode.parentNode;
     tareaElemento.remove();
+    /* Actualizamos los contadores */
+    actualizarContadores();
+    /* Actualizamos los botones */
+    actualizarEstadoBotones();
   })
 
   /* Retornamos la estructura */
@@ -72,15 +93,131 @@ function agregarTarea() {
 
     /* Mostramos el mensaje de tarea creada */
     mensaje.textContent = "Tarea creada exitosamente! 🫡";
+
+    /* Actualizamos los contadores */
+    actualizarContadores();
+    /* Actualizamos los botones */
+    actualizarEstadoBotones();
+
   } else {
     /* Mostramos el mensaje de escribir antes de agregar*/
     mensaje.textContent = "Por favor escribe una tarea antes de agregar. 😅";
   }
 }
 
+
+/* Función Actualizar Contadores */
+
+function actualizarContadores() {
+  // Contamos todas las tareas
+  const tareasTotales = document.querySelectorAll(".tarea");
+  const tareasCompletadas = document.querySelectorAll(".tarea-completada");
+
+  // Actualizamos los contadores en el DOM
+  contadorTotales.textContent = tareasTotales.length;
+  contadorTerminadas.textContent = tareasCompletadas.length; 
+}
+
+/* Función Ocultar/Mostrar Tareas Completadas */
+
+let tareasOcultas = false; // Variable para controlar el estado
+
+function toggleOcultarCompletadas() {
+  const tareasCompletadas = document.querySelectorAll(".tarea-completada");
+
+  tareasCompletadas.forEach( (tarea) => {
+    if(tareasOcultas) {
+      // Mostramos tareas
+      tarea.style.display = "flex";
+    }else {
+      // Ocultamos tareas
+      tarea.style.display = "none";
+    }
+  } );
+
+  // Cambiamos el estado
+  tareasOcultas = !tareasOcultas;
+
+  // Cambiamos el texto del botón
+
+  if (tareasOcultas) {
+    botonOcultar.textContent = "Mostrar Completadas";
+    mensaje.textContent = "Tareas completadas ocultadas 👀";
+  } else {
+    botonOcultar.textContent = "Ocultar Completadas";
+    mensaje.textContent = "Tareas completadas visibles 👁️";
+  }
+}
+
+/* Función Eliminar Todas las Tareas Completadas */
+
+
+function eliminarCompletadas() {
+  const tareasCompletadas = document.querySelectorAll(".tarea-completada");
+
+  if (tareasCompletadas.length === 0) {
+    mensaje.textContent = "No hay tareas completadas para eliminar 🤷";
+    return;
+  }
+  
+  // Eliminamos cada tarea completada
+  tareasCompletadas.forEach(tarea => {
+    tarea.remove();
+  });
+  
+  // Actualizamos contadores
+  actualizarContadores();
+  /* Actualizamos los botones */
+  actualizarEstadoBotones();
+  
+  // Reseteamos el estado de ocultar si estaba activo
+  if (tareasOcultas) {
+    tareasOcultas = false;
+    botonOcultar.textContent = "Ocultar Completadas";
+  }
+  
+  // Mostramos mensaje
+  mensaje.textContent = `${tareasCompletadas.length} tarea(s) eliminada(s) exitosamente! 🗑️`;
+}
+
+
+
+
+/* Función Actualizar Estado de Botones */
+
+function actualizarEstadoBotones() {
+  const tareasTotales = document.querySelectorAll(".tarea");
+  const tareasCompletadas = document.querySelectorAll(".tarea-completada");
+  
+  // Deshabilitar botón "Ocultar" si no hay tareas completadas
+  if (tareasCompletadas.length === 0) {
+    botonOcultar.disabled = true;
+    botonOcultar.style.opacity = "0.5";
+    botonOcultar.style.cursor = "not-allowed";
+  } else {
+    botonOcultar.disabled = false;
+    botonOcultar.style.opacity = "1";
+    botonOcultar.style.cursor = "pointer";
+  }
+  
+  // Deshabilitar botón "Eliminar" si no hay tareas completadas
+  if (tareasCompletadas.length === 0) {
+    botonEliminar.disabled = true;
+    botonEliminar.style.opacity = "0.5";
+    botonEliminar.style.cursor = "not-allowed";
+  } else {
+    botonEliminar.disabled = false;
+    botonEliminar.style.opacity = "1";
+    botonEliminar.style.cursor = "pointer";
+  }
+}
+
 /* Escuchadores */
 
 botonAgregar.addEventListener("click", agregarTarea);
+botonOcultar.addEventListener("click", toggleOcultarCompletadas);
+botonEliminar.addEventListener("click", eliminarCompletadas);
+
 
 
 /* Hacemos que el al presionar la tecla Enter en el input se cree la entrada */
@@ -103,3 +240,6 @@ tareaEntrada.addEventListener("input", () => {
   
 })
 
+
+/* Al inicializar la página */
+actualizarEstadoBotones();
